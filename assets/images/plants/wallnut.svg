@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="坚果墙">
+  <defs>
+    <linearGradient id="nutFill" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#c59058"/>
+      <stop offset="100%" stop-color="#7a4f2f"/>
+    </linearGradient>
+    <linearGradient id="nutShade" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#dbb07c"/>
+      <stop offset="100%" stop-color="#9b653b"/>
+    </linearGradient>
+  </defs>
+  <g stroke="#5f3d24" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+    <path fill="url(#nutFill)" d="M60 112c-25 0-38-15-38-39V46c0-23 16-38 38-38s38 15 38 38v27c0 24-13 39-38 39z"/>
+    <path fill="url(#nutShade)" d="M60 103c-18 0-28-11-28-30V50c0-19 11-31 28-31s28 12 28 31v23c0 19-10 30-28 30z"/>
+    <ellipse cx="45" cy="50" rx="7" ry="10" fill="#fff5e7"/>
+    <ellipse cx="74" cy="50" rx="7" ry="10" fill="#fff5e7"/>
+    <ellipse cx="45" cy="49" rx="3.5" ry="5.5" fill="#2f1d12"/>
+    <ellipse cx="74" cy="49" rx="3.5" ry="5.5" fill="#2f1d12"/>
+    <path fill="none" d="M36 36c8-7 16-9 24-6"/>
+    <path fill="none" d="M84 36c-7-6-15-8-23-6"/>
+    <path fill="#8a5234" d="M45 74c7 5 22 5 30 0-2 9-10 15-15 15-8 0-14-6-15-15z"/>
+    <path fill="none" d="M60 26v66"/>
+    <path fill="none" d="M60 63c-6 4-10 9-11 16"/>
+    <path fill="none" d="M60 56c7 4 12 10 13 18"/>
+    <path fill="none" d="M31 66c4 2 7 4 10 8"/>
+    <path fill="none" d="M90 62c-5 2-8 6-10 9"/>
+  </g>
+</svg>
