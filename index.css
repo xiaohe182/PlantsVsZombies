@@ -116,6 +116,38 @@ h2 {
     linear-gradient(180deg, #8bb66a 0%, #709552 56%, #638648 100%);
 }
 
+#board-hud {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 6;
+  display: flex;
+  gap: 10px;
+}
+
+.hud-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid rgba(101, 115, 88, 0.36);
+  border-radius: 999px;
+  background: rgba(251, 247, 231, 0.86);
+  box-shadow: 0 10px 18px rgba(31, 43, 25, 0.12);
+}
+
+.hud-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.hud-label {
+  color: #6a735d;
+  font-size: 12px;
+}
+
 .board-glow {
   position: absolute;
   inset: 0;
@@ -194,6 +226,10 @@ h2 {
 }
 
 .sun-item {
+  pointer-events: auto;
+  padding: 0;
+  background: transparent;
+  border: 0;
   filter: drop-shadow(0 8px 16px rgba(157, 116, 18, 0.24));
 }
 
@@ -464,6 +500,13 @@ h2 {
 
   .board-frame {
     min-height: 520px;
+  }
+
+  #board-hud {
+    top: 12px;
+    right: 12px;
+    flex-direction: column;
+    align-items: flex-end;
   }
 
   .panel-pill {

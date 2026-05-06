@@ -18,6 +18,16 @@
         <section id="game-board" aria-label="游戏棋盘">
           <div id="board-stage">
             <div class="board-frame">
+              <div id="board-hud">
+                <div class="hud-pill">
+                  <img class="hud-icon" src="./assets/images/ui/sun.svg" alt="阳光">
+                  <strong id="sun-count">150</strong>
+                </div>
+                <div class="hud-pill">
+                  <span class="hud-label">波次</span>
+                  <strong id="wave-count">0 / 3</strong>
+                </div>
+              </div>
               <div class="board-glow"></div>
               <div id="grid-layer"></div>
               <div id="entity-layer"></div>

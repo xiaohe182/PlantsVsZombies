@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 入口模块
  * 游戏初始化、开始游戏、暂停游戏、重新开始
  */
@@ -20,10 +20,13 @@
    */
   function startGame() {
     const state = window.GameState.getGameState();
-    window.GameState.setGameStatus("running");
-    window.GameState.setMessage("骨架循环已启动，后续接入战斗逻辑。");
+    if (state.meta.status === "victory" || state.meta.status === "defeat") {
+      return;
+    }
 
-    if (state.level.currentWave === 0) {
+    window.GameState.setGameStatus("running");
+    window.GameState.setMessage("战斗开始。守住三波僵尸。");
+    if (!state.level.started) {
       window.GameLevel.startLevel(state);
     }
 
@@ -35,9 +38,17 @@
    */
   function pauseGame() {
     const state = window.GameState.getGameState();
-    const nextStatus = state.meta.status === "paused" ? "running" : "paused";
-    const message = nextStatus === "paused" ? "游戏已暂停。" : "游戏已继续。";
+    if (state.meta.status === "victory" || state.meta.status === "defeat") {
+      return;
+    }
 
+    if (state.meta.status === "ready") {
+      startGame();
+      return;
+    }
+
+    const nextStatus = state.meta.status === "paused" ? "running" : "paused";
+    const message = nextStatus === "paused" ? "游戏已暂停。" : "战斗继续。";
     window.GameState.setGameStatus(nextStatus);
     window.GameState.setMessage(message);
     window.GameRender.renderGame(state);

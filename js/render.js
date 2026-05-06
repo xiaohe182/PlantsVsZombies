@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 渲染模块
  * 棋盘渲染、卡片渲染、实体渲染、界面刷新
  */
@@ -33,9 +33,8 @@
    */
   function renderGrid(state) {
     const gridLayer = document.getElementById("grid-layer");
-
     gridLayer.innerHTML = state.grid.cells.map(function (cell) {
-      return createCellHtml(cell);
+      return createCellHtml(state, cell);
     }).join("");
   }
 
@@ -70,8 +69,8 @@
    */
   function renderZombies(state) {
     return state.zombies.map(function (zombie) {
-      const styleText = getEntityStyle(zombie.lane, 8, 68, 90);
-      return '<div class="entity-item zombie-item" style="' + styleText + '">' + zombie.label + "</div>";
+      const styleText = getEntityStyle(zombie.row, zombie.col, 70, 96);
+      return '<div class="entity-item zombie-item" data-zombie-type="' + zombie.type + '" style="' + styleText + '">' + zombie.label + "</div>";
     }).join("");
   }
 
@@ -93,7 +92,7 @@
     return state.suns.map(function (sun) {
       const styleText = getEntityStyle(sun.row, sun.col, 56, 56);
       const assetPath = "./assets/images/ui/sun.svg";
-      return '<div class="entity-item sun-item float-idle" style="' + styleText + '">' + createAssetImage(assetPath, "阳光", "sun-art") + "</div>";
+      return '<button class="entity-item sun-item float-idle" type="button" data-role="sun-item" data-sun-id="' + sun.id + '" style="' + styleText + '">' + createAssetImage(assetPath, "阳光", "sun-art") + "</button>";
     }).join("");
   }
 
@@ -102,11 +101,25 @@
    */
   function createCardHtml(state, plantType) {
     const plantConfig = window.GameConfig.PLANT_CONFIG[plantType];
+    const cooldown = state.cards.cooldowns[plantType];
     const isActive = state.selection.plantType === plantType && !state.selection.shovelMode;
-    const classText = isActive ? "plant-card is-active" : "plant-card";
+    const isDisabled = cooldown > 0 || state.resources.sun < plantConfig.cost;
+    const classNames = ["plant-card"];
+
+    if (isActive) {
+      classNames.push("is-active");
+    }
+
+    if (cooldown > 0) {
+      classNames.push("is-cooling");
+    }
+
+    if (isDisabled) {
+      classNames.push("is-disabled");
+    }
 
     return [
-      '<button class="' + classText + '" type="button" data-role="plant-card" data-plant-type="' + plantType + '">',
+      '<button class="' + classNames.join(" ") + '" type="button" data-role="plant-card" data-plant-type="' + plantType + '">',
       '<span class="card-art-wrap">' + createAssetImage(getPlantAssetPath(plantType), plantConfig.name, "card-art") + "</span>",
       '<span class="card-cost">' + plantConfig.cost + "</span>",
       '<span class="card-cooldown"></span>',
@@ -129,8 +142,13 @@
   /**
    * 生成格子结构
    */
-  function createCellHtml(cell) {
-    return '<button class="grid-cell is-hoverable" type="button" data-role="grid-cell" data-row="' + cell.row + '" data-col="' + cell.col + '"></button>';
+  function createCellHtml(state, cell) {
+    const classNames = ["grid-cell", "is-hoverable"];
+    if (state.selection.plantType && cell.plantId === "") {
+      classNames.push("is-can-plant");
+    }
+
+    return '<button class="' + classNames.join(" ") + '" type="button" data-role="grid-cell" data-row="' + cell.row + '" data-col="' + cell.col + '"></button>';
   }
 
   /**
@@ -155,10 +173,7 @@
     const fallbackHeight = window.GameConfig.GAME_CONFIG.boardHeight;
 
     if (!gridLayer) {
-      return {
-        width: fallbackWidth,
-        height: fallbackHeight
-      };
+      return { width: fallbackWidth, height: fallbackHeight };
     }
 
     return {

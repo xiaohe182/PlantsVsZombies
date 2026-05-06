@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 事件模块
  * 事件绑定、卡片选择、格子点击、按钮点击
  */
@@ -16,6 +16,7 @@
     bindCardEvents();
     bindGridEvents();
     bindActionEvents();
+    bindSunEvents();
     bindModalEvents();
     isBound = true;
   }
@@ -24,16 +25,14 @@
    * 绑定卡片事件
    */
   function bindCardEvents() {
-    const cardPanel = document.getElementById("card-panel");
-    cardPanel.addEventListener("click", handleCardPanelClick);
+    document.getElementById("card-panel").addEventListener("click", handleCardPanelClick);
   }
 
   /**
    * 绑定格子事件
    */
   function bindGridEvents() {
-    const gridLayer = document.getElementById("grid-layer");
-    gridLayer.addEventListener("click", handleGridClick);
+    document.getElementById("grid-layer").addEventListener("click", handleGridClick);
   }
 
   /**
@@ -46,10 +45,31 @@
   }
 
   /**
+   * 绑定阳光事件
+   */
+  function bindSunEvents() {
+    document.getElementById("entity-layer").addEventListener("click", handleEntityClick);
+  }
+
+  /**
    * 绑定弹层事件
    */
   function bindModalEvents() {
     document.getElementById("modal-restart-button").addEventListener("click", window.GameMain.restartGame);
+  }
+
+  /**
+   * 处理实体点击
+   */
+  function handleEntityClick(event) {
+    const target = event.target.closest("[data-role='sun-item']");
+    if (!target) {
+      return;
+    }
+
+    const state = window.GameState.getGameState();
+    window.GameSun.collectSun(state, target.dataset.sunId || "");
+    window.GameRender.renderGame(state);
   }
 
   /**
@@ -75,9 +95,23 @@
   function handleCardClick(plantType) {
     const state = window.GameState.getGameState();
     const plantConfig = window.GameConfig.PLANT_CONFIG[plantType];
+    if (!plantConfig) {
+      return;
+    }
+
+    if (state.cards.cooldowns[plantType] > 0) {
+      window.GameState.setMessage("植物冷却中。");
+      window.GameRender.renderGame(state);
+      return;
+    }
+
+    if (state.resources.sun < plantConfig.cost) {
+      window.GameState.setMessage("阳光不足。");
+      window.GameRender.renderGame(state);
+      return;
+    }
 
     window.GameState.setSelection(plantType, false);
-    window.GameState.setMessage("已选择 " + plantConfig.name + "。");
     window.GameRender.renderGame(state);
   }
 
@@ -87,7 +121,6 @@
   function handleShovelClick() {
     const state = window.GameState.getGameState();
     window.GameState.setSelection("", true);
-    window.GameState.setMessage("已选择铲子。");
     window.GameRender.renderGame(state);
   }
 
@@ -104,14 +137,16 @@
     const col = Number(target.dataset.col);
     const state = window.GameState.getGameState();
 
+    if (state.meta.status !== "running") {
+      window.GameMain.startGame();
+    }
+
     if (state.selection.shovelMode) {
       removePlantAtCell(state, row, col);
       return;
     }
 
     if (!state.selection.plantType) {
-      window.GameState.setMessage("请先选择植物卡片。");
-      window.GameRender.renderGame(state);
       return;
     }
 
@@ -122,10 +157,7 @@
    * 铲除植物
    */
   function removePlantAtCell(state, row, col) {
-    const removed = window.GamePlants.removePlant(state, row, col);
-    const message = removed ? "植物已移除。" : "当前格子没有植物。";
-
-    window.GameState.setMessage(message);
+    window.GamePlants.removePlant(state, row, col);
     window.GameRender.renderGame(state);
   }
 
@@ -134,10 +166,9 @@
    */
   function plantSeedAtCell(state, row, col, plantType) {
     const planted = window.GamePlants.plantSeed(state, row, col, plantType);
-    const plantConfig = window.GameConfig.PLANT_CONFIG[plantType];
-    const message = planted ? plantConfig.name + " 已种植。" : "当前格子无法种植或阳光不足。";
-
-    window.GameState.setMessage(message);
+    if (planted) {
+      window.GameState.setSelection("", false);
+    }
     window.GameRender.renderGame(state);
   }
 

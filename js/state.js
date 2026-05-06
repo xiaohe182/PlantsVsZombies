@@ -1,6 +1,6 @@
-/**
+﻿/**
  * 状态模块
- * 初始状态、状态重置、状态读取
+ * 初始状态、状态重置、状态读取、状态更新
  */
 (function () {
   let gameState = null;
@@ -13,7 +13,9 @@
       meta: {
         status: "ready",
         started: false,
-        lastTickTime: 0
+        lastTickTime: 0,
+        deltaTime: 0,
+        elapsedTime: 0
       },
       resources: {
         sun: window.GameConfig.GAME_CONFIG.startSun
@@ -21,6 +23,9 @@
       selection: {
         plantType: "",
         shovelMode: false
+      },
+      cards: {
+        cooldowns: createCardCooldowns()
       },
       grid: {
         rows: window.GameConfig.GAME_CONFIG.boardRows,
@@ -33,13 +38,28 @@
       suns: [],
       level: {
         currentWave: 0,
-        totalWaves: window.GameConfig.LEVEL_CONFIG.totalWaves
+        totalWaves: window.GameConfig.LEVEL_CONFIG.totalWaves,
+        elapsedTime: 0,
+        spawnQueue: [],
+        started: false,
+        completed: false
       },
       ui: {
-        message: "点击开始按钮，进入骨架调试状态。",
+        message: "点击开始按钮，开始战斗。",
         selectedText: "未选择"
       }
     };
+  }
+
+  /**
+   * 创建冷却表
+   */
+  function createCardCooldowns() {
+    const cooldowns = {};
+    Object.keys(window.GameConfig.PLANT_CONFIG).forEach(function (plantType) {
+      cooldowns[plantType] = 0;
+    });
+    return cooldowns;
   }
 
   /**
@@ -57,7 +77,6 @@
     if (!gameState) {
       gameState = createInitialState();
     }
-
     return gameState;
   }
 
@@ -74,8 +93,7 @@
    * 设置提示
    */
   function setMessage(message) {
-    const state = getGameState();
-    state.ui.message = message;
+    getGameState().ui.message = message;
   }
 
   /**
@@ -88,12 +106,31 @@
     state.ui.selectedText = shovelMode ? "铲子" : plantType || "未选择";
   }
 
+  /**
+   * 扣减冷却
+   */
+  function reduceCardCooldowns(state, deltaTime) {
+    Object.keys(state.cards.cooldowns).forEach(function (plantType) {
+      const currentValue = state.cards.cooldowns[plantType];
+      state.cards.cooldowns[plantType] = Math.max(0, currentValue - deltaTime);
+    });
+  }
+
+  /**
+   * 设置冷却
+   */
+  function setCardCooldown(state, plantType, cooldown) {
+    state.cards.cooldowns[plantType] = cooldown;
+  }
+
   window.GameState = {
     createInitialState,
     resetGameState,
     getGameState,
     setGameStatus,
     setMessage,
-    setSelection
+    setSelection,
+    reduceCardCooldowns,
+    setCardCooldown
   };
 })();

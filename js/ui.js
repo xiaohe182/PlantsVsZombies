@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 界面模块
  * 面板更新、提示文本、选择文本、弹层显示
  */
@@ -9,7 +9,6 @@
   function updateHeaderPanel(state) {
     setText("sun-count", String(state.resources.sun));
     setText("wave-count", state.level.currentWave + " / " + state.level.totalWaves);
-    setText("game-status", window.GameUtils.getStatusText(state.meta.status));
   }
 
   /**
