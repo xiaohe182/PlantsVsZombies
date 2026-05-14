@@ -1,20 +1,67 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="阳光">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140" role="img" aria-label="阳光">
   <defs>
-    <radialGradient id="sunCore" cx="50%" cy="45%" r="55%">
-      <stop offset="0%" stop-color="#fff8c9"/>
-      <stop offset="55%" stop-color="#ffd95a"/>
-      <stop offset="100%" stop-color="#e7a92e"/>
+    <radialGradient id="sunCore" cx="42%" cy="38%" r="58%">
+      <stop offset="0%" stop-color="#FFFDE0"/>
+      <stop offset="35%" stop-color="#FFE44D"/>
+      <stop offset="70%" stop-color="#FFBF00"/>
+      <stop offset="100%" stop-color="#D4960A"/>
     </radialGradient>
+    <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="60%" stop-color="#FFD700" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#FFD700" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="sunBlur">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2"/>
+    </filter>
   </defs>
-  <g stroke="#9b6a1d" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
-    <path fill="#f3c94a" d="M60 6l8 19 17-11-2 20 21-2-12 17 18 9-18 8 12 17-21-2 2 20-17-11-8 19-8-19-17 11 2-20-21 2 12-17-18-8 18-9-12-17 21 2-2-20 17 11z"/>
-    <circle cx="60" cy="60" r="28" fill="url(#sunCore)"/>
-    <ellipse cx="49" cy="56" rx="6" ry="8" fill="#fff9ef"/>
-    <ellipse cx="71" cy="56" rx="6" ry="8" fill="#fff9ef"/>
-    <ellipse cx="49" cy="56" rx="2.8" ry="4.3" fill="#5d3f12"/>
-    <ellipse cx="71" cy="56" rx="2.8" ry="4.3" fill="#5d3f12"/>
-    <path fill="none" d="M41 46c4-5 9-8 15-7"/>
-    <path fill="none" d="M79 46c-4-5-9-8-15-7"/>
-    <path fill="#f59e77" d="M47 72c8 8 18 8 26 0-2 8-10 14-13 14s-12-6-13-14z"/>
+
+  <!-- Outer glow -->
+  <circle cx="70" cy="70" r="68" fill="url(#sunGlow)"/>
+
+  <!-- Ray spikes -->
+  <g fill="#FFD233" stroke="#B8860B" stroke-width="2" stroke-linejoin="round">
+    <path d="M70 4 L76 24 L64 24Z"/>
+    <path d="M70 136 L76 116 L64 116Z"/>
+    <path d="M4 70 L24 64 L24 76Z"/>
+    <path d="M136 70 L116 64 L116 76Z"/>
+    <path d="M23 23 L36 30 L30 36Z"/>
+    <path d="M117 23 L110 36 L104 30Z" fill="#FFCC22"/>
+    <path d="M23 117 L36 110 L30 104Z"/>
+    <path d="M117 117 L110 104 L104 110Z" fill="#FFCC22"/>
+    <!-- Extra rays between -->
+    <path d="M44 8 L50 28 L40 22Z" opacity="0.85"/>
+    <path d="M96 8 L100 22 L90 28Z" opacity="0.85"/>
+    <path d="M44 132 L40 118 L50 112Z" opacity="0.85"/>
+    <path d="M96 132 L90 112 L100 118Z" opacity="0.85"/>
+    <path d="M8 44 L28 40 L22 50Z" opacity="0.85"/>
+    <path d="M8 96 L22 90 L28 100Z" opacity="0.85"/>
+    <path d="M132 44 L118 40 L112 50Z" opacity="0.85"/>
+    <path d="M132 96 L112 100 L118 90Z" opacity="0.85"/>
   </g>
+
+  <!-- Main circle -->
+  <circle cx="70" cy="70" r="36" fill="url(#sunCore)" stroke="#B8860B" stroke-width="3"/>
+
+  <!-- Eyes -->
+  <ellipse cx="58" cy="64" rx="8" ry="10" fill="#FFFDF5" stroke="#8B6914" stroke-width="2"/>
+  <ellipse cx="82" cy="64" rx="8" ry="10" fill="#FFFDF5" stroke="#8B6914" stroke-width="2"/>
+  <ellipse cx="60" cy="65" rx="4" ry="5.5" fill="#4A3010"/>
+  <ellipse cx="84" cy="65" rx="4" ry="5.5" fill="#4A3010"/>
+  <circle cx="62" cy="62" r="2.2" fill="#FFF" opacity="0.9"/>
+  <circle cx="86" cy="62" r="2.2" fill="#FFF" opacity="0.9"/>
+
+  <!-- Happy eyebrows -->
+  <path d="M48 54 C52 50, 62 50, 66 54" fill="none" stroke="#8B6914" stroke-width="2" stroke-linecap="round"/>
+  <path d="M74 54 C78 50, 88 50, 92 54" fill="none" stroke="#8B6914" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Blush -->
+  <circle cx="48" cy="74" r="6" fill="#FFB0B0" opacity="0.35"/>
+  <circle cx="92" cy="74" r="6" fill="#FFB0B0" opacity="0.35"/>
+
+  <!-- Smile -->
+  <path d="M56 80 Q62 90, 70 90 Q78 90, 84 80" fill="#8B5020" stroke="#6A3A10" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M60 80 Q65 86, 70 86 Q75 86, 80 80" fill="#E86060" stroke="none"/>
+
+  <!-- Top highlight -->
+  <ellipse cx="60" cy="50" rx="16" ry="8" fill="#FFF" opacity="0.12"/>
 </svg>

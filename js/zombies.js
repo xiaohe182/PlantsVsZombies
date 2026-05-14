@@ -74,6 +74,7 @@
    * 移动僵尸
    */
   function moveZombie(state, zombie, deltaTime) {
+    zombie.isAttacking = false;
     zombie.col -= zombie.speed * (deltaTime / 1000);
     if (zombie.col < window.GameConfig.GAME_CONFIG.defeatOffset) {
       state.meta.status = "defeat";
@@ -85,6 +86,7 @@
    * 啃食植物
    */
   function attackPlant(state, zombie, plant, deltaTime) {
+    zombie.isAttacking = true;
     zombie.attackTimer += deltaTime;
     zombie.col = Math.max(zombie.col, plant.col + 0.16);
     if (zombie.attackTimer < zombie.attackInterval) {

@@ -10,6 +10,7 @@
     const state = window.GameState.resetGameState();
     state.grid.cells = window.GameGrid.createGridCells(state.grid.rows, state.grid.cols);
     window.GameUI.hideResultModal();
+    window.GameRender.clearCache();
     window.GameRender.renderGame(state);
     window.GameEvents.bindGameEvents();
     window.GameLoop.startLoop();

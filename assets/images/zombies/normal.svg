@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 160" role="img" aria-label="普通僵尸">
+  <defs>
+    <linearGradient id="zkSkin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#A8B89A"/>
+      <stop offset="100%" stop-color="#7E9470"/>
+    </linearGradient>
+    <linearGradient id="zkSkinDark" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8A9A7C"/>
+      <stop offset="100%" stop-color="#6A7E5E"/>
+    </linearGradient>
+    <linearGradient id="zkShirt" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8B7333"/>
+      <stop offset="60%" stop-color="#6B5323"/>
+      <stop offset="100%" stop-color="#4A3813"/>
+    </linearGradient>
+    <linearGradient id="zkPant" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4A4A52"/>
+      <stop offset="100%" stop-color="#2A2A32"/>
+    </linearGradient>
+    <linearGradient id="zkTie" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#A03030"/>
+      <stop offset="100%" stop-color="#701818"/>
+    </linearGradient>
+    <filter id="zkShadow">
+      <feDropShadow dx="2" dy="4" stdDeviation="4" flood-color="#0a0e08" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#zkShadow)">
+    <!-- Left arm (reaching forward) -->
+    <path d="M22 68 C14 62, 6 56, 2 50" fill="none" stroke="url(#zkSkin)" stroke-width="10" stroke-linecap="round"/>
+    <path d="M22 68 C14 62, 6 56, 2 50" fill="none" stroke="#5A6E4E" stroke-width="10" stroke-linecap="round" opacity="0.15"/>
+    <!-- Left hand -->
+    <ellipse cx="2" cy="48" rx="6" ry="5" fill="url(#zkSkinDark)" stroke="#5A6E4E" stroke-width="1.5"/>
+    <!-- Fingers -->
+    <path d="M-2 44 L-4 38" stroke="url(#zkSkinDark)" stroke-width="3" stroke-linecap="round"/>
+    <path d="M2 43 L2 36" stroke="url(#zkSkinDark)" stroke-width="3" stroke-linecap="round"/>
+    <path d="M6 44 L8 38" stroke="url(#zkSkinDark)" stroke-width="3" stroke-linecap="round"/>
+
+    <!-- Right arm (hanging/swaying) -->
+    <path d="M98 68 C106 78, 110 90, 108 100" fill="none" stroke="url(#zkSkin)" stroke-width="10" stroke-linecap="round"/>
+    <path d="M98 68 C106 78, 110 90, 108 100" fill="none" stroke="#5A6E4E" stroke-width="10" stroke-linecap="round" opacity="0.15"/>
+    <!-- Right hand -->
+    <ellipse cx="108" cy="102" rx="6" ry="5" fill="url(#zkSkinDark)" stroke="#5A6E4E" stroke-width="1.5"/>
+
+    <!-- Legs -->
+    <rect x="38" y="110" width="16" height="36" rx="4" fill="url(#zkPant)" stroke="#1A1A22" stroke-width="1.8"/>
+    <rect x="66" y="110" width="16" height="36" rx="4" fill="url(#zkPant)" stroke="#1A1A22" stroke-width="1.8"/>
+    <!-- Shoes -->
+    <ellipse cx="46" cy="148" rx="12" ry="6" fill="#3A3020" stroke="#2A2010" stroke-width="1.5"/>
+    <ellipse cx="74" cy="148" rx="12" ry="6" fill="#3A3020" stroke="#2A2010" stroke-width="1.5"/>
+
+    <!-- Body / shirt -->
+    <path d="M28 56 C26 54, 24 56, 24 60 L22 110 C22 114, 30 118, 60 118 C90 118, 98 114, 98 110 L96 60 C96 56, 94 54, 92 56 Z" fill="url(#zkShirt)" stroke="#3A2810" stroke-width="2.5" stroke-linejoin="round"/>
+
+    <!-- Shirt collar -->
+    <path d="M42 54 L50 62 L60 54" fill="url(#zkShirt)" stroke="#3A2810" stroke-width="2"/>
+    <path d="M60 54 L70 62 L78 54" fill="url(#zkShirt)" stroke="#3A2810" stroke-width="2"/>
+
+    <!-- Tie -->
+    <path d="M57 58 L60 90 L63 58" fill="url(#zkTie)" stroke="#501010" stroke-width="1.2"/>
+    <path d="M55 56 L60 62 L65 56Z" fill="#B03838" stroke="#501010" stroke-width="1"/>
+
+    <!-- Torn shirt edges -->
+    <path d="M24 80 L28 78 L26 84 L30 82 L28 88" fill="#5A4218" stroke="none" opacity="0.5"/>
+    <path d="M96 86 L92 84 L94 90 L90 88 L92 94" fill="#5A4218" stroke="none" opacity="0.5"/>
+
+    <!-- Belt -->
+    <rect x="24" y="108" width="72" height="5" rx="1" fill="#2A2018" stroke="#1A1008" stroke-width="1"/>
+    <rect x="55" y="107" width="10" height="7" rx="1" fill="#6A5A3A" stroke="#3A2A1A" stroke-width="1"/>
+
+    <!-- Neck -->
+    <rect x="48" y="42" width="24" height="16" rx="4" fill="url(#zkSkin)" stroke="#5A6E4E" stroke-width="1.5"/>
+  </g>
+
+  <!-- Head -->
+  <g>
+    <!-- Ears -->
+    <ellipse cx="30" cy="32" rx="6" ry="9" fill="url(#zkSkin)" stroke="#5A6E4E" stroke-width="1.5"/>
+    <ellipse cx="90" cy="32" rx="6" ry="9" fill="url(#zkSkin)" stroke="#5A6E4E" stroke-width="1.5"/>
+
+    <!-- Head shape -->
+    <ellipse cx="60" cy="30" rx="30" ry="28" fill="url(#zkSkin)" stroke="#5A6E4E" stroke-width="2.5"/>
+
+    <!-- Hair - messy tangles -->
+    <g fill="#2A2420" stroke="#1A1410" stroke-width="1">
+      <path d="M34 14 C30 6, 42 2, 48 8 C44 4, 36 6, 34 14Z"/>
+      <path d="M48 8 C46 0, 58 -2, 62 4 C58 0, 50 2, 48 8Z"/>
+      <path d="M62 4 C62 -2, 74 -2, 76 6 C72 0, 64 0, 62 4Z"/>
+      <path d="M76 6 C80 0, 90 4, 86 14 C88 6, 78 2, 76 6Z"/>
+      <path d="M40 12 C36 8, 44 4, 50 10Z" fill="#2A2420"/>
+      <path d="M70 8 C72 2, 82 4, 80 12Z" fill="#2A2420"/>
+      <!-- Stray hairs -->
+      <path d="M44 10 L40 2" stroke="#2A2420" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M68 6 L72 -2" stroke="#2A2420" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M56 6 L56 -2" stroke="#2A2420" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    </g>
+
+    <!-- Eyes - zombie eyes (milky/glassy) -->
+    <ellipse cx="48" cy="28" rx="9" ry="10" fill="#E8E8D8" stroke="#4A5E3E" stroke-width="2"/>
+    <ellipse cx="72" cy="28" rx="9" ry="10" fill="#E8E8D8" stroke="#4A5E3E" stroke-width="2"/>
+    <!-- Pupils - small, unfocused -->
+    <circle cx="50" cy="29" r="3.5" fill="#4A5E3E"/>
+    <circle cx="74" cy="27" r="3.5" fill="#4A5E3E"/>
+    <!-- Milky overlay -->
+    <ellipse cx="48" cy="27" rx="5" ry="4" fill="#FFF" opacity="0.2"/>
+    <ellipse cx="72" cy="25" rx="5" ry="4" fill="#FFF" opacity="0.2"/>
+
+    <!-- Dark circles under eyes -->
+    <ellipse cx="48" cy="36" rx="8" ry="3" fill="#5A6E4E" opacity="0.25"/>
+    <ellipse cx="72" cy="36" rx="8" ry="3" fill="#5A6E4E" opacity="0.25"/>
+
+    <!-- Nose -->
+    <ellipse cx="60" cy="36" rx="4" ry="3" fill="url(#zkSkinDark)" stroke="#5A6E4E" stroke-width="1.2"/>
+
+    <!-- Mouth - open, zombie groan -->
+    <path d="M44 44 C48 50, 56 52, 60 50 C64 52, 72 50, 76 44" fill="#3A1A1A" stroke="#4A5E3E" stroke-width="2" stroke-linecap="round"/>
+    <!-- Teeth -->
+    <rect x="48" y="44" width="5" height="5" rx="1" fill="#E8D8B0" stroke="#4A5E3E" stroke-width="0.8"/>
+    <rect x="55" y="44" width="5" height="5" rx="1" fill="#E8D8B0" stroke="#4A5E3E" stroke-width="0.8"/>
+    <rect x="62" y="44" width="5" height="5" rx="1" fill="#D8C8A0" stroke="#4A5E3E" stroke-width="0.8"/>
+    <!-- Tongue -->
+    <ellipse cx="60" cy="49" rx="5" ry="3" fill="#8A4040" opacity="0.6"/>
+
+    <!-- Chin shadow -->
+    <ellipse cx="60" cy="52" rx="12" ry="3" fill="#5A6E4E" opacity="0.15"/>
+  </g>
+</svg>

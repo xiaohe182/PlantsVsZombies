@@ -46,7 +46,9 @@
       },
       ui: {
         message: "点击开始按钮，开始战斗。",
-        selectedText: "未选择"
+        selectedText: "未选择",
+        hoverRow: -1,
+        hoverCol: -1
       }
     };
   }

@@ -13,6 +13,10 @@
   --gold-soft: #d2b273;
   --shadow-heavy: 0 26px 60px rgba(7, 17, 12, 0.32);
   --shadow-soft: 0 14px 28px rgba(18, 31, 21, 0.18);
+  --entity-plant-size: 88px;
+  --entity-zombie-size: 70px;
+  --entity-projectile-size: 22px;
+  --entity-sun-size: 68px;
 }
 
 /* 基础重置 */
@@ -67,7 +71,7 @@ h2 {
 #app {
   width: min(calc(100vw - 12px), 1600px);
   margin: 0 auto;
-  padding: 8px 0 18px;
+  padding: 40px 0;
 }
 
 .side-panel,
@@ -99,9 +103,11 @@ h2 {
 
 #board-stage {
   position: relative;
-  width: min(100%, 1460px);
+  width: calc(100% - 154px);
+  max-width: 1460px;
   margin: 0 auto;
-  padding-inline: 92px 62px;
+  padding-left: 92px;
+  padding-right: 62px;
 }
 
 .board-frame {
@@ -109,7 +115,8 @@ h2 {
   overflow: hidden;
   width: 100%;
   aspect-ratio: 1.55 / 1;
-  min-height: 720px;
+  max-height: 85vh;
+  min-height: 400px;
   padding: 18px;
   background:
     radial-gradient(circle at 50% 18%, rgba(255, 247, 218, 0.18), transparent 24%),
@@ -206,19 +213,23 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: center;
+  will-change: left, top;
 }
 
 .plant-item {
   filter: drop-shadow(0 16px 14px rgba(21, 40, 16, 0.24));
+  z-index: 2;
 }
 
 .zombie-item {
-  border-radius: 18px;
-  border: 1px solid rgba(68, 54, 46, 0.55);
-  background: linear-gradient(180deg, rgba(154, 144, 134, 0.96), rgba(115, 106, 98, 0.96));
-  color: #fff;
-  font-size: 26px;
-  box-shadow: 0 14px 20px rgba(33, 28, 24, 0.18);
+  filter: drop-shadow(0 14px 20px rgba(33, 28, 24, 0.22));
+  z-index: 3;
+}
+
+.zombie-art {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .projectile-item {
@@ -234,27 +245,27 @@ h2 {
 }
 
 .entity-art {
-  width: 88px;
-  height: 88px;
+  width: var(--entity-plant-size);
+  height: var(--entity-plant-size);
   object-fit: contain;
 }
 
 .projectile-art {
-  width: 22px;
-  height: 22px;
+  width: var(--entity-projectile-size);
+  height: var(--entity-projectile-size);
   object-fit: contain;
 }
 
 .sun-art {
-  width: 56px;
-  height: 56px;
+  width: var(--entity-sun-size);
+  height: var(--entity-sun-size);
   object-fit: contain;
 }
 
 /* 左侧悬浮卡槽 */
 #plant-sidebar {
   position: absolute;
-  left: 18px;
+  left: 8px;
   top: 24px;
   z-index: 5;
   width: 84px;
@@ -339,7 +350,7 @@ h2 {
 /* 右侧悬浮控制 */
 #control-panel {
   position: absolute;
-  right: 16px;
+  right: 8px;
   top: 50%;
   z-index: 5;
   width: 46px;
@@ -428,31 +439,217 @@ h2 {
 }
 
 @keyframes float-idle {
-  0% {
+  0%, 100% {
     transform: translateY(0);
   }
-
   50% {
-    transform: translateY(-4px);
-  }
-
-  100% {
-    transform: translateY(0);
+    transform: translateY(-5px);
   }
 }
 
+/* ── 植物动画 ── */
+
+/* 向日葵 - 愉快摇摆 */
+.anim-plant-sunflower {
+  animation: anim-sunflower 2.6s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+@keyframes anim-sunflower {
+  0%, 100% {
+    transform: rotate(0deg) translateY(0);
+  }
+  15% {
+    transform: rotate(3deg) translateY(-3px);
+  }
+  35% {
+    transform: rotate(-2deg) translateY(-4px);
+  }
+  55% {
+    transform: rotate(2.5deg) translateY(-2px);
+  }
+  75% {
+    transform: rotate(-3deg) translateY(-3px);
+  }
+}
+
+/* 豌豆射手 - 沉稳待机 + 微微后仰 */
+.anim-plant-peashooter {
+  animation: anim-peashooter 2s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+@keyframes anim-peashooter {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  30% {
+    transform: translateY(-2px) rotate(-0.5deg);
+  }
+  60% {
+    transform: translateY(-1px) rotate(0.5deg);
+  }
+}
+
+/* 坚果墙 - 紧张呼吸 */
+.anim-plant-wallnut {
+  animation: anim-wallnut 3.2s ease-in-out infinite;
+  transform-origin: center center;
+}
+
+@keyframes anim-wallnut {
+  0%, 100% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.035);
+  }
+  60% {
+    transform: scale(0.98);
+  }
+}
+
+/* ── 僵尸动画 ── */
+
+/* 蹒跚行走 - 身体左右晃 + 脚步上下颠 */
+.anim-zombie-walk {
+  animation: anim-zombie-walk 0.7s ease-in-out infinite;
+  transform-origin: 30% 95%;
+}
+
+@keyframes anim-zombie-walk {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  15% {
+    transform: translateY(-5px) rotate(4deg);
+  }
+  30% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(-4deg);
+  }
+  65% {
+    transform: translateY(0) rotate(0deg);
+  }
+  80% {
+    transform: translateY(-3px) rotate(2deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+/* 啃食植物 - 前倾咬合 + 回弹 */
+.anim-zombie-eat {
+  animation: anim-zombie-eat 0.45s ease-in-out infinite;
+  transform-origin: 30% 65%;
+}
+
+@keyframes anim-zombie-eat {
+  0%, 100% {
+    transform: translateX(0) rotate(0deg);
+  }
+  35% {
+    transform: translateX(5px) rotate(5deg);
+  }
+  70% {
+    transform: translateX(-2px) rotate(-2deg);
+  }
+}
+
+/* 阳光弹跳（增强） */
+.sun-item.float-idle {
+  animation: float-idle 1.6s ease-in-out infinite;
+}
+
+/* 子弹加速感 */
+.projectile-item {
+  z-index: 1;
+}
+
+.projectile-trail {
+  z-index: 0;
+}
+
 /* 响应式 */
-@media (max-width: 1180px) {
+
+/* 超大屏（> 1600px）- 保持最大尺寸 */
+@media (min-width: 1600px) {
+  :root {
+    --entity-plant-size: 88px;
+    --entity-zombie-size: 70px;
+    --entity-projectile-size: 22px;
+    --entity-sun-size: 68px;
+  }
+}
+
+/* 大屏（1200px - 1600px）- 轻微缩放 */
+@media (max-width: 1599px) {
+  :root {
+    --entity-plant-size: 80px;
+    --entity-zombie-size: 64px;
+    --entity-projectile-size: 20px;
+    --entity-sun-size: 60px;
+  }
+
   #board-stage {
     padding-inline: 82px 54px;
   }
 
   .board-frame {
-    min-height: 640px;
+    min-height: 600px;
   }
 }
 
+/* 中屏（860px - 1200px）- 中等缩放 */
+@media (max-width: 1180px) {
+  :root {
+    --entity-plant-size: 72px;
+    --entity-zombie-size: 58px;
+    --entity-projectile-size: 18px;
+    --entity-sun-size: 54px;
+  }
+
+  #board-stage {
+    padding-inline: 82px 54px;
+  }
+
+  .board-frame {
+    min-height: 540px;
+  }
+
+  #plant-sidebar {
+    width: 76px;
+  }
+
+  .plant-card,
+  #shovel-button {
+    width: 60px;
+    min-height: 72px;
+  }
+
+  .card-art-wrap {
+    width: 40px;
+    height: 40px;
+  }
+
+  .card-art {
+    width: 38px;
+    height: 38px;
+  }
+}
+
+/* 小屏（600px - 860px）- 较大缩放 */
 @media (max-width: 860px) {
+  :root {
+    --entity-plant-size: 64px;
+    --entity-zombie-size: 52px;
+    --entity-projectile-size: 16px;
+    --entity-sun-size: 50px;
+  }
+
   #app {
     width: min(100%, calc(100vw - 16px));
     padding-top: 8px;
@@ -461,6 +658,8 @@ h2 {
   #game-shell {
     min-height: auto;
     padding: 0;
+    flex-direction: column;
+    align-items: stretch;
   }
 
   #plant-sidebar,
@@ -495,11 +694,12 @@ h2 {
   }
 
   #board-stage {
+    width: 100%;
     padding-inline: 0;
   }
 
   .board-frame {
-    min-height: 520px;
+    min-height: 480px;
   }
 
   #board-hud {
@@ -513,4 +713,193 @@ h2 {
     width: 100%;
     min-width: 0;
   }
+}
+
+/* 超小屏（< 600px）- 最大缩放 */
+@media (max-width: 599px) {
+  :root {
+    --entity-plant-size: 52px;
+    --entity-zombie-size: 42px;
+    --entity-projectile-size: 14px;
+    --entity-sun-size: 44px;
+  }
+
+  #app {
+    padding: 4px;
+  }
+
+  #game-shell {
+    padding: 0;
+  }
+
+  .board-frame {
+    min-height: 380px;
+    padding: 12px;
+    border-radius: 18px;
+  }
+
+  #grid-layer,
+  #entity-layer {
+    inset: 12px;
+  }
+
+  #grid-layer {
+    border-radius: 14px;
+  }
+
+  #board-hud {
+    top: 8px;
+    right: 8px;
+    gap: 6px;
+  }
+
+  .hud-pill {
+    min-height: 32px;
+    padding: 0 10px;
+    gap: 6px;
+  }
+
+  .hud-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .hud-label {
+    font-size: 11px;
+  }
+
+  #plant-sidebar {
+    padding: 6px;
+    border-radius: 16px;
+  }
+
+  #card-panel {
+    grid-template-columns: repeat(auto-fit, minmax(56px, 1fr));
+    gap: 6px;
+  }
+
+  .plant-card,
+  #shovel-button {
+    width: 56px;
+    min-height: 66px;
+    padding: 4px 3px 6px;
+    border-radius: 14px;
+  }
+
+  .card-art-wrap {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+  }
+
+  .card-art {
+    width: 32px;
+    height: 32px;
+  }
+
+  .card-cost {
+    font-size: 11px;
+    padding: 1px 5px;
+  }
+
+  .icon-button,
+  #modal-restart-button {
+    width: 38px;
+    height: 38px;
+    min-height: 38px;
+    border-radius: 12px;
+  }
+
+  .modal-card {
+    width: min(360px, calc(100vw - 24px));
+    padding: 20px;
+    border-radius: 20px;
+  }
+
+  #modal-title {
+    font-size: 24px;
+  }
+
+  #modal-text {
+    font-size: 14px;
+  }
+}
+
+/* 拖拽层 */
+#drag-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+}
+
+.drag-ghost {
+  position: fixed;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  opacity: 0.85;
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.35));
+  transition: opacity 80ms ease;
+}
+
+.ghost-art {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+}
+
+.shovel-cursor {
+  position: fixed;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #c8934e 0%, #91613a 100%);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  box-shadow: 0 6px 16px rgba(80, 40, 10, 0.35);
+  pointer-events: none;
+}
+
+/* 拖拽悬停格子高亮 */
+.grid-cell.is-drag-hover {
+  outline: 3px solid rgba(255, 220, 80, 0.9);
+  outline-offset: -3px;
+  background: rgba(255, 255, 255, 0.28);
+}
+
+/* 铲子悬停格子高亮 */
+.grid-cell.is-shovel-hover {
+  outline: 3px solid rgba(220, 80, 60, 0.85);
+  outline-offset: -3px;
+  background: rgba(220, 80, 60, 0.12);
+}
+
+/* 子弹尾迹 */
+.projectile-trail {
+  pointer-events: none;
+}
+
+/* 阳光飞行收集 */
+.sun-fly {
+  position: fixed;
+  width: 36px;
+  height: 36px;
+  pointer-events: none;
+  z-index: 200;
+  filter: drop-shadow(0 4px 12px rgba(220, 180, 30, 0.5));
+}
+
+/* 铲子模式 / 拖拽模式 光标隐藏 */
+body.is-shovel-mode,
+body.is-shovel-mode *,
+body.is-dragging,
+body.is-dragging * {
+  cursor: none !important;
 }
